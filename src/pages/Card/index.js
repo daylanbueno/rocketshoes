@@ -9,9 +9,10 @@ import {
 } from 'react-icons/md';
 import { Container, ProductTable, Total } from './styles';
 
+import { formatPrice } from '../../util/format'
 import * as CartActions from '../../store/modules/cart/actions';
 
-function Card({ cart, removeFromCart, updateAmount }) {
+function Card({ cart, removeFromCart, updateAmount, total }) {
     const handleRemoveProduct = (product) => {
         removeFromCart(product.id);
     };
@@ -74,7 +75,7 @@ function Card({ cart, removeFromCart, updateAmount }) {
                                 </div>
                             </td>
                             <td>
-                                <strong>$129,90</strong>
+                                <strong>{product.subtotal}</strong>
                             </td>
                             <td>
                                 <button
@@ -93,7 +94,7 @@ function Card({ cart, removeFromCart, updateAmount }) {
                 <button type="button">Finalizar pedito</button>
                 <Total>
                     <span>TOTAL</span>
-                    <strong>$1920,28</strong>
+                    <strong>{total}</strong>
                 </Total>
             </footer>
         </Container>
@@ -101,7 +102,16 @@ function Card({ cart, removeFromCart, updateAmount }) {
 }
 
 const mapStateToProps = (state) => ({
-    cart: state.cart,
+    cart: state.cart.map((product) => ({
+        ...product,
+        subtotal: formatPrice(product.price * product.amount),
+    })),
+
+    total: formatPrice(
+        state.cart.reduce((total, product) => {
+            return total + product.price * product.amount;
+        }, 0)
+    ),
 });
 
 const mapDispatchToProps = (dispatch) =>
