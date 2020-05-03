@@ -29,5 +29,7 @@ module.exports = {
             { extensions: [".jsx", ".js"] },
         ],
         "import/prefer-default-export": "off",
+        "no-console": "off",
+        "no-param-reassign": "off",
     },
 };
