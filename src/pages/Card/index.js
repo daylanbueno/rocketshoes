@@ -8,7 +8,14 @@ import {
 } from 'react-icons/md';
 import { Container, ProductTable, Total } from './styles';
 
-function Card({ cart }) {
+function Card({ cart, dispatch }) {
+    const handleRemoveProduct = (product) => {
+        dispatch({
+            type: 'REMOVE_FROM_CART',
+            id: product.id,
+        });
+    };
+
     return (
         <Container>
             <ProductTable>
@@ -56,7 +63,10 @@ function Card({ cart }) {
                                 <strong>$129,90</strong>
                             </td>
                             <td>
-                                <button type="button">
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveProduct(product)}
+                                >
                                     <MdDelete size={20} color="#7159c1" />
                                 </button>
                             </td>
