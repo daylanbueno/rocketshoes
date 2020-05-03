@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
     MdAddCircleOutline,
     MdRemoveCircleOutline,
@@ -8,12 +9,19 @@ import {
 } from 'react-icons/md';
 import { Container, ProductTable, Total } from './styles';
 
-function Card({ cart, dispatch }) {
+import * as CartActions from '../../store/modules/cart/actions';
+
+function Card({ cart, removeFromCart, updateAmount }) {
     const handleRemoveProduct = (product) => {
-        dispatch({
-            type: 'REMOVE_FROM_CART',
-            id: product.id,
-        });
+        removeFromCart(product.id);
+    };
+
+    const increment = (product) => {
+        updateAmount(product.id, product.amount + 1);
+    };
+
+    const decrement = (product) => {
+        updateAmount(product.id, product.amount - 1);
     };
 
     return (
@@ -40,7 +48,10 @@ function Card({ cart, dispatch }) {
                             </td>
                             <td>
                                 <div>
-                                    <button type="button">
+                                    <button
+                                        type="button"
+                                        onClick={() => decrement(product)}
+                                    >
                                         <MdRemoveCircleOutline
                                             size={20}
                                             color="#7159c1"
@@ -51,7 +62,10 @@ function Card({ cart, dispatch }) {
                                         readOnly
                                         value={product.amount}
                                     />
-                                    <button type="button">
+                                    <button
+                                        type="button"
+                                        onClick={() => increment(product)}
+                                    >
                                         <MdAddCircleOutline
                                             size={20}
                                             color="#7159c1"
@@ -86,8 +100,11 @@ function Card({ cart, dispatch }) {
     );
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     cart: state.cart,
 });
 
-export default connect(mapStateToProps)(Card);
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators(CartActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
