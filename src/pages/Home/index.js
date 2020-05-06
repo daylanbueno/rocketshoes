@@ -1,6 +1,8 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { MdAddShoppingCart } from 'react-icons/md';
@@ -25,9 +27,16 @@ class Home extends Component {
         this.setState({ products: data });
     }
 
-    handleAddProduct = product => {
-        const { addToCart } = this.props;
-        addToCart(product);
+    handleAddProduct = async (product) => {
+        const { addToCart, amount } = this.props;
+        const response = await api.get(`/stock/${product.id}`);
+        const stock = response.data.amount;
+        const quantityCart = amount[product.id] || 0;
+        if (stock > quantityCart) {
+            addToCart(product);
+        } else {
+            toast.error('Produto indisponível');
+        }
     };
 
     render() {
@@ -66,5 +75,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) =>
     bindActionCreators(CartActions, dispatch);
+
+Home.propTypes = {
+    addToCart: PropTypes.func.isRequired,
+    amount: PropTypes.shape({}),
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

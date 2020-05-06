@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 import {
     MdAddCircleOutline,
     MdRemoveCircleOutline,
@@ -9,16 +11,24 @@ import {
 } from 'react-icons/md';
 import { Container, ProductTable, Total } from './styles';
 
-import { formatPrice } from '../../util/format'
+import { formatPrice } from '../../util/format';
 import * as CartActions from '../../store/modules/cart/actions';
+import api from '../../services/api';
 
 function Card({ cart, removeFromCart, updateAmount, total }) {
     const handleRemoveProduct = (product) => {
         removeFromCart(product.id);
     };
 
-    const increment = (product) => {
-        updateAmount(product.id, product.amount + 1);
+    const increment = async (product) => {
+        const { amount } = product;
+        const response = await api.get(`/stock/${product.id}`);
+        const stock = response.data.amount;
+        if (stock > amount) {
+            updateAmount(product.id, product.amount + 1);
+        } else {
+            toast.error('Não tem produtos disponvíes');
+        }
     };
 
     const decrement = (product) => {
@@ -116,5 +126,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) =>
     bindActionCreators(CartActions, dispatch);
+
+Card.propTypes = {
+    cart: PropTypes.array.isRequired,
+    removeFromCart: PropTypes.func.isRequired,
+    updateAmount: PropTypes.func.isRequired,
+    total: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);
