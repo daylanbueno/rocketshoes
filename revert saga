@@ -1,0 +1,20 @@
+Revert "Ajuste"
+
+This reverts commit 6749bef3d80f8243a40f43e5fe816515951435e8.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# No ramo master
+# Your branch is up to date with 'origin/master'.
+#
+# Mudanças a serem submetidas:
+#	modified:   package.json
+#	modified:   src/pages/Home/index.js
+#	modified:   src/store/index.js
+#	modified:   src/store/modules/cart/actions.js
+#	modified:   src/store/modules/cart/reducer.js
+#	deleted:    src/store/modules/cart/sagas.js
+#	deleted:    src/store/modules/rootSaga.js
+#	modified:   yarn.lock
+#
