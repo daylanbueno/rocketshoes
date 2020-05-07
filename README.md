@@ -1,4 +1,4 @@
-Rocketshoes é um projeto desenvolvido acompanando o Bootcamp da Rocketseat, o objetivo é explora o uso do redux criando essa loja de sapatos.
+Rocketshoes é um projeto desenvolvido acompanhando o Bootcamp da Rocketseat, o objetivo é explora o uso do redux criando essa loja de sapatos.
 Arquitetura flux.
 Reactjs,
 Redux,
