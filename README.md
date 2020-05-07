@@ -11,6 +11,7 @@ yarn: install para instalar os packages.
 yarn start : disponível http://localhost:3000 no seu navegador.
 
 Para iniciar a api.
+
 Instalar: json-server: npm install --global json-server
 
 Iniciar: json-server server.json -p 33333
