@@ -6,6 +6,8 @@ Redux,
 
 Libraries: Axios, json-server, reactjs,react-router,react-toastify, reactotron e redux.
 
+yarn: install para instalar os packages.
+
 yarn start : disponível http://localhost:3000 no seu navegador.
 
 Para iniciar a api.
