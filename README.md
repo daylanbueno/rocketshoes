@@ -16,4 +16,7 @@ Instalar: json-server: npm install --global json-server
 
 Iniciar: json-server server.json -p 33333
 
+![image](https://user-images.githubusercontent.com/17939912/116577616-046b8880-a8e7-11eb-85c9-65420133bf6b.png)
+
+
 
